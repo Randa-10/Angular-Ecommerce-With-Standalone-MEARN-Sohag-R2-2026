@@ -1,0 +1,96 @@
+<!--
+<div class="card" style="width: 18rem;">
+  <img src="{{productProp.productImgURl}}" class="card-img-top" alt="...">
+  <img [src]="productProp.productImgURl" class="card-img-top" alt="...">
+
+  <div class="card-body">
+    <h5 class="card-title"> {{productProp.productName}} </h5>
+    <p class="card-text">
+      {{productProp.productDetails}}
+</p>    <a href="#" class="">price: {{productProp.productPrice}}</a>
+  </div>
+</div> -->
+<div class="container">
+  <!-- event binding (eventname)="method()" -->
+  <p>{{ data | date: 'medium' }}</p>
+  <div class="mt-2">
+    <!-- <input class="form-control" [value]="username" > -->
+    <!-- two  binding  [(ngModel)]="prop"-->
+    <!-- <input class="form-control"  [(ngModel)]="username" > -->
+    <!-- <input class="form-control" [(ngModel)]="filterProduct" />
+    <p>{{ username }}</p> -->
+  </div>
+
+  <button class="btn btn-dark mt-4" (click)="toggleMethod()">
+    {{ toggleProp ? 'hide' : 'show' }} images
+  </button>
+  <div class="row">
+    @for (items of productsAfterSearch; track items.id) {
+      <div class="col-4 mt-2">
+        <!-- step2 -->
+        <div  class="card" style="width: 18rem"  [routerLink]="['/products-parent/',items.id]">
+          <!-- <img src="{{items.productImgUrl}}" class="card-img-top" alt="..."> -->
+          @if (toggleProp) {
+            <img
+              color="green"
+              appImgSyle
+              [src]="items.productImgUrl"
+              class="card-img-top"
+              alt="..."
+            />
+          } @else {
+            <p>no image</p>
+          }
+
+          <div class="card-body">
+            <!-- property bind [class] [style] -->
+            <!-- attribute directives [ngClass],[ngStyle]  -->
+            <!-- <h5 class="card-title">{{ items.productName }}</h5> -->
+            <!-- property binding [class.classname]="cond" -->
+            <!-- <h5 class="card-title" [class.text-danger]="items.productQuantity==0"
+            [class.test]="items.productQuantity>0">{{ items.productName }}</h5> -->
+            <!-- attribute directives [ngClass]="{'classname':cond}" ,ngStyle  -->
+            <!-- <h5 class="card-title" [ngClass]="{'text-danger':items.productQuantity==0,'test':items.productQuantity>0}">{{ items.productName }}</h5> -->
+            <!-- property biding [style.prop]="cond?'':''"  -->
+            <!-- <h5 [style.color]="items.productQuantity==0?'red':'green'" class="card-title">{{ items.productName }}</h5> -->
+            <!-- attribute directives  ,[ngStyle]="{'prop':cond?'':''}"  -->
+            <!-- <h5 class="card-title" [ngStyle]="{'color':(items.productQuantity==0)?'red':'green'
+}">{{ items.productName }}</h5> -->
+            <h5 class="card-title">{{ items.productName | lowercase }}</h5>
+            <p class="card-text">
+              {{ items.productDetails }}
+            </p>
+            <div class="d-flex justify-content-between">
+              <!-- <p class="card-text">qty: {{ items.productQuantity }}</p> -->
+              <p class="card-text">
+                price: {{ items.productPrice | discout: 25 | currency: 'SAR' : 'code' }}
+              </p>
+
+              @switch (items.productQuantity) {
+                @case (0) {
+                  <p class="text-danger">out of stock</p>
+                }
+                @case (1) {
+                  <p class="text-warning">last item in stock</p>
+                }
+                @default {
+                  <p class="text-success">in stock</p>
+                }
+              }
+            </div>
+            <!-- property binding  src , disabled , hidden-->
+            <!-- <button  class="btn btn-success" [disabled]="items.productQuantity==0">Add To Cart</button> -->
+            <!-- <button  class="btn btn-success" [hidden]="items.productQuantity==0">Add To Cart</button> -->
+            @if (items.productQuantity == 0) {
+              <p>out of stock</p>
+            } @else {
+              <button class="btn btn-success"  (click)="AddToCartInChild(items)">Add To Cart</button>
+            }
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-center text-danger">no products</p>
+    }
+  </div>
+</div>

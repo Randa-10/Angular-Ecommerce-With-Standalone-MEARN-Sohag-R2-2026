@@ -1,0 +1,29 @@
+<!-- <p>home works!</p> -->
+<!--
+Data Binding -->
+
+<!-- 1-one way binding -->
+<!-- i-interpolation  {{propNAME.prop}} -->
+ <!-- <h2>{{useName}}</h2> -->
+<h1> {{propStore.storeName}} </h1>
+<!-- <img  src="{{propStore.storeLogo}}"/> -->
+<!-- ii-property binding  [src]="propname" ,[hidden] , [href]-->
+<img  [src]="propStore.storeLogo"/>
+
+<ul>
+  <!-- <li> {{propStore.storeBranch[0]}}</li>
+  <li> {{propStore.storeBranch[1]}}</li> -->
+
+  <!-- loop -->
+   <!-- @for(anyitem of arrayName ; track id ){
+html code
+   } -->
+
+   @for ( item of propStore.storeBranch ; track propStore.storeBranch ){
+    <li>{{item}}</li>
+   }
+</ul>
+
+<!-- 1-two way binding -->
+
+<app-products></app-products>
