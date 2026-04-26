@@ -25,5 +25,10 @@ html code
 </ul>
 
 <!-- 1-two way binding -->
+<button class="btn btn-success" (click)="login()" [disabled]="isUserLogged">loging</button>
+<button class="btn btn-danger" (click)="logout()" [disabled]="!isUserLogged">logout</button>
 
-<app-products></app-products>
+
+<!-- <app-products></app-products> -->
+
+<app-signals></app-signals>

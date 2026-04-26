@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { Iproduct } from '../../Models/iproduct';
 import { FormsModule } from '@angular/forms';
 import { ImgSyle } from '../../directives/img-syle';
@@ -7,6 +7,7 @@ import { DiscoutPipe } from '../../pipes/discout-pipe';
 import { ProductStatic } from '../../services/product-static';
 import { Router, RouterModule } from '@angular/router';
 import { ProductsDynamic } from '../../services/products-dynamic';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -14,10 +15,14 @@ import { ProductsDynamic } from '../../services/products-dynamic';
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
-export class Products implements OnInit {
+export class Products implements OnInit , OnDestroy {
   //propinterface
 
-  productProp!: Iproduct[]; //non null assertion operator
+  // productProp!: Iproduct[]; //non null assertion operator
+  //Day7
+ 
+
+productProp=signal<Iproduct[]>([])
   toggleProp: boolean = true;
   //Day3
 
@@ -136,6 +141,11 @@ export class Products implements OnInit {
     //step4
     // this.productsAfterSearch=this.productProp
   }
+//day7
+  dataPrd!:Subscription
+  ngOnDestroy(): void {
+   this.dataPrd.unsubscribe()
+  }
   ngOnInit(): void {
     //  this.productProp=this.prdStaticService.getAllProduct() //[{},{}]
     //Day6
@@ -149,14 +159,16 @@ export class Products implements OnInit {
     // });
 
     //Observer
-    this.prdWithApi.getAllProduct().subscribe((data) => {
+   this.dataPrd= this.prdWithApi.getAllProduct().subscribe((data) => {
       console.log(data);
 
-      this.productProp = data;
-
-      this.productsAfterSearch = this.productProp;
+      // this.productProp = data;
+      //Day7
+this.productProp.set(data)
+      // this.productsAfterSearch = this.productProp;
+ this.productsAfterSearch.set(this.productProp())
       //zone js
-      this.cdr.detectChanges();
+      // this.cdr.detectChanges();
     });
   }
 
@@ -168,7 +180,9 @@ export class Products implements OnInit {
   //set , get
 
   //step3
-  productsAfterSearch: Iproduct[] = [];
+  // productsAfterSearch: Iproduct[] = [];
+  //Day7
+  productsAfterSearch=signal<Iproduct[]>([])
 
   //step2
   //Day4
@@ -185,11 +199,13 @@ export class Products implements OnInit {
     // this.productsAfterSearch = this.prdStaticService.doSearch(valuSet);
     //Day6
     this.prdWithApi.getAllProduct().subscribe((data) => {
-      this.productsAfterSearch = data.filter((prd: Iproduct) =>
+      // this.productsAfterSearch = data.filter((prd: Iproduct) =>
+      //   prd.productName.toLowerCase().includes(valuSet),
+      // );
+ this.productsAfterSearch.set(data.filter((prd: Iproduct) =>
         prd.productName.toLowerCase().includes(valuSet),
-      );
-
-      this.cdr.detectChanges();
+       ))
+      // this.cdr.detectChanges();
     });
   }
 

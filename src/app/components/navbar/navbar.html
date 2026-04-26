@@ -17,7 +17,9 @@
            <a class="nav-link" routerLink="/sigup"  routerLinkActive="active" >signUp</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link disabled" href="#">Disabled</a>
+           <a class="nav-link" [hidden]="isUserLogged()">login</a>
+           <a class="nav-link" [hidden]="!isUserLogged()">logout</a>
+
          </li>
        </ul>
      </div> </div>

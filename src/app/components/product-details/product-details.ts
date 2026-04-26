@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductStatic } from '../../services/product-static';
 import { Iproduct } from '../../Models/iproduct';
@@ -15,7 +15,7 @@ export class ProductDetails {
   //step3==> get id from url
 currentId:number=0
 productData:Iproduct|undefined={} as Iproduct
-
+// productData=signal<Iproduct|undefined>({} as Iproduct)
 currenIndex:number=0
 arrOfIds:number[]=[]
 constructor(
@@ -36,7 +36,10 @@ this.active.params.subscribe((x)=>{
 // this.productData=this.prdService.getProductById(this.currentId)
 //Day6
 this.PrdWithApi.getProductById(this.currentId).subscribe((data)=>{
+
+  // this.productData.set(data)
   this.productData=data
+
   this.cd.detectChanges()
 })
  console.log(this.prdService.getProductById(this.currentId))
