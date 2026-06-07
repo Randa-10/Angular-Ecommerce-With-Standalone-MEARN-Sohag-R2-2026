@@ -6,6 +6,7 @@ import { ProductDetails } from './components/product-details/product-details';
 import { TemplateDrivenSigup } from './components/template-driven-sigup/template-driven-sigup';
 import { ReactiveFormSignup } from './components/reactive-form-signup/reactive-form-signup';
 import { authGuard } from './Guards/auth-guard';
+import { FormSignals } from './components/form-signals/form-signals';
 
 export const routes: Routes = [
 
@@ -23,7 +24,7 @@ export const routes: Routes = [
  //dynamic route   /:anyname
  //step1
 {path:'products-parent/:idFromUrl',component:ProductDetails,canActivate:[authGuard]},
-{path:'sigup',component:ReactiveFormSignup},
+{path:'sigup',component:FormSignals},
  //wild card route == not found
  {path:'**',component:Notfound}
 ];

@@ -1,0 +1,94 @@
+<div class="container">
+  <form (submit)="AddNewUser($event)">
+
+    <!-- First Name -->
+    <div class="mb-3">
+      <label for="fname" class="form-label">First Name</label>
+      <input
+        type="text"
+        id="fname"
+        class="form-control"
+        placeholder="Enter your first name"
+        [formField]="userForm.fname"
+        [class.is-invalid]="userForm.fname().touched() && userForm.fname().invalid()"
+        [class.is-valid]="userForm.fname().touched() && userForm.fname().valid()"
+      />
+      @if (userForm.fname().touched() && userForm.fname().invalid()) {
+        <div class="invalid-feedback d-block">
+          @for (error of userForm.fname().errors(); track error) {
+            <p>{{ error.message }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Last Name -->
+    <div class="mb-3">
+      <label for="lname" class="form-label">Last Name</label>
+      <input
+        type="text"
+        id="lname"
+        class="form-control"
+        placeholder="Enter your last name"
+        [formField]="userForm.lname"
+        [class.is-invalid]="userForm.lname().touched() && userForm.lname().invalid()"
+        [class.is-valid]="userForm.lname().touched() && userForm.lname().valid()"
+      />
+      @if (userForm.lname().touched() && userForm.lname().invalid()) {
+        <div class="invalid-feedback d-block">
+          @for (error of userForm.lname().errors(); track error) {
+            <p>{{ error.message }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        placeholder="Enter your email"
+        [formField]="userForm.email"
+        [class.is-invalid]="userForm.email().touched() && userForm.email().invalid()"
+        [class.is-valid]="userForm.email().touched() && userForm.email().valid()"
+      />
+      @if (userForm.email().touched() && userForm.email().invalid()) {
+        <div class="invalid-feedback d-block">
+          @for (error of userForm.email().errors(); track error) {
+            <p>{{ error.message }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        placeholder="Enter your password"
+        [formField]="userForm.password"
+        [class.is-invalid]="userForm.password().touched() && userForm.password().invalid()"
+        [class.is-valid]="userForm.password().touched() && userForm.password().valid()"
+      />
+      @if (userForm.password().touched() && userForm.password().invalid()) {
+        <div class="invalid-feedback d-block">
+          @for (error of userForm.password().errors(); track error) {
+            <p>{{ error.message }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-success w-100" [disabled]="userForm().invalid()">
+      Submit
+    </button>
+
+  </form>
+</div>
